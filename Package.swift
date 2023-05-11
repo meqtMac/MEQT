@@ -5,6 +5,13 @@ import PackageDescription
 
 let package = Package(
     name: "MyScienceLibrary",
+    platforms: [
+        .macOS(.v13),
+        .iOS(.v16),
+        .macCatalyst(.v16),
+        .tvOS(.v16),
+        .watchOS(.v9)
+    ],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
@@ -23,6 +30,11 @@ let package = Package(
             dependencies: []),
         .testTarget(
             name: "MyScienceLibraryTests",
-            dependencies: ["MyScienceLibrary"]),
+            dependencies: ["MyScienceLibrary"],
+            resources: [.copy("Test Resources")]),
+        .testTarget(name: "ArraySpeedTests",
+                    dependencies: ["MyScienceLibrary"],
+                    resources: [.copy("Test Resources")])
     ]
 )
+
