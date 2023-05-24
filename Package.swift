@@ -46,6 +46,6 @@ let package = Package(
                 .unsafeFlags(["-O"])
             ]
         )
-   ]
+    ]
 )
 

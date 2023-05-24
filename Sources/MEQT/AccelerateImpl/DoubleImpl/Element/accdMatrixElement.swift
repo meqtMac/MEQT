@@ -26,7 +26,7 @@ extension Double: MatrixTransposable {
                 destinationPointer,
                 1,
                 vDSP_Length(sourceColumns),
-                vDSP_Length(sourceColumns)
+                vDSP_Length(sourceRows)
             )
     }
 }

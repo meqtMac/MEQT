@@ -5,8 +5,6 @@
 //  Created by 蒋艺 on 2023/5/18.
 //
 
-//import Foundation
-
 /// A type that represents an immutable buffer.
 public protocol MEQTBuffer {
     associatedtype Element
@@ -15,7 +13,7 @@ public protocol MEQTBuffer {
     var data: [Element] {get set }
 }
 
-protocol MEQTMatrixProtocol: MEQTBuffer & CustomStringConvertible {
+public protocol MEQTMatrixProtocol: MEQTBuffer & CustomStringConvertible {
     var rows: Index { get set }
     var columns: Index { get set }
     
