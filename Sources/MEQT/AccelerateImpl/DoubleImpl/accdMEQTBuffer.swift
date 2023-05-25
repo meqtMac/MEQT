@@ -38,7 +38,7 @@ public struct MEQTMatrix<Element>: MEQTMatrixBuffer & MEQTMatrixInit where Eleme
         self.init(rows: rows, columns: columns)
         for rowCounter in 0..<self.rows {
             for columnCount in 0..<self.columns {
-                self.data[rowCounter*self.columns+columnCount] = row.data[columnCount]
+                self.data[rowCounter*self.columns+columnCount] = row.data[rowCounter]
             }
         }
     }
