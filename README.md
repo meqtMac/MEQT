@@ -30,6 +30,60 @@ m1[0..<512, 0..<512] = m2[512..<1024, 512..<1024]*2
 // m1*128
 ```
 
+if you use Accelerate framework, it would be like 
+``` swift
+import Accelerate
+let acx = vDSP.ramp(in: -1.0...1.0, count: 1024)
+let acy = vDSP.ramp(in: -1.0...1.0, count: 1024)
+let acones = [Double](repeating: 1.0, count: 1024)
+
+var mm1 = [Double](unsafeUninitializedCapacity: 1024*1024) { buffer, initializedCount in
+    initializedCount = 1024*1024
+    vDSP_mmulD(
+        acx,
+        vDSP_Stride(1),
+        acones,
+        vDSP_Stride(1),
+        buffer.baseAddress!,
+        vDSP_Stride(1),
+        vDSP_Length(1024),
+        vDSP_Length(1024),
+        vDSP_Length(1)
+    )
+}
+let mm2 = [Double](unsafeUninitializedCapacity: 1024*1024) { buffer, initializedCount in
+    initializedCount = 1024*1024
+    vDSP_mmulD(
+        acones,
+        vDSP_Stride(1),
+        acy,
+        vDSP_Stride(1),
+        buffer.baseAddress!,
+        vDSP_Stride(1),
+        vDSP_Length(1024),
+        vDSP_Length(1024),
+        vDSP_Length(1)
+    )
+}
+
+mm1.withUnsafeMutableBufferPointer { m1Buffer in
+    if let cptr = m1Buffer.baseAddress {
+        mm2.withUnsafeBufferPointer { buffer in
+            if let aptr = buffer.baseAddress?.advanced(by: 1024*511+511) {
+                vDSP_mmovD(
+                    aptr,
+                    cptr,
+                    vDSP_Length(512),
+                    vDSP_Length(512),
+                    vDSP_Length(1024),
+                    vDSP_Length(1024)
+                )
+            }
+        }
+    }
+}
+```
+
 ## Current State
 - Protocols for Basic Operations
 - macOS Basic Implementation for Double with Accelerate Framework
