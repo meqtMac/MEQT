@@ -7,17 +7,23 @@
 
 #if canImport(Accelerate)
 import Accelerate
-import Darwin.C.math
+//import Darwin.C.math
+import Foundation
+
 extension Double: VectorMap {}
 extension Double: VectorTrigonometric {
     public static func cos(_ vector: UnsafePointer<Double>, result: UnsafeMutablePointer<Double>, count: Int) {
-        var count = Int32(count)
-        vvcos(result, vector, &count)
+        for i in 0..<count {
+            result[i] = Foundation.cos(vector[i])
+        }
     }
     
     public static func cosPi(_ vector: UnsafePointer<Double>, result: UnsafeMutablePointer<Double>, count: Int) {
-        var count = Int32(count)
-        vvcospi(result, vector, &count)
+//        var count = Int32(count)
+//        vvcospi(result, vector, &count)
+        for i in 0..<count {
+            result[i] = Foundation.__cospi(vector[i])
+        }
     }
     
     public static func sin(_ vector: UnsafePointer<Double>, result: UnsafeMutablePointer<Double>, count: Int) {
@@ -228,7 +234,7 @@ extension Double: VectorExpLogPow {
         vvpow(result, exponents, base, &count)
     }
     
-   
+    
     public static func exp(_ vector: UnsafePointer<Double>, result: UnsafeMutablePointer<Double>, count: Int) {
         var count = Int32(count)
         vvexp(result, vector, &count)
@@ -265,7 +271,7 @@ extension Double: VectorExpLogPow {
     }
     
     public static func square(_ vector: UnsafePointer<Double>, result: UnsafeMutablePointer<Double>, count: Int) {
-    vDSP_vsqD(vector, vDSP_Stride(1), result, vDSP_Stride(1), vDSP_Length(count))
+        vDSP_vsqD(vector, vDSP_Stride(1), result, vDSP_Stride(1), vDSP_Length(count))
     }
     
     public static func rsqrt(_ vector: UnsafePointer<Double>, result: UnsafeMutablePointer<Double>, count: Int) {
