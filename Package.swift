@@ -31,6 +31,12 @@ let package = Package(
                 .unsafeFlags(["-O"])
             ]
        ),
+        .executableTarget(
+            name: "MEQTBuilder",
+            dependencies: [
+                "MEQT"
+            ]
+        ),
         .testTarget(
             name: "MEQTTests",
             dependencies: ["MEQT"],

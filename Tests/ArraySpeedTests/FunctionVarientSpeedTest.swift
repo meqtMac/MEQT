@@ -7,7 +7,6 @@
 
 import XCTest
 import Accelerate
-//import simd
 
 final class FunctionVarientSpeedTest: XCTestCase {
     static let size = 1024*1024

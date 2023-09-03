@@ -9,13 +9,38 @@
 import Accelerate
 extension Double: VectorCombine {}
 extension Double: VectorArithmetic {
-    public static func add(_ lhs: UnsafePointer<Double>, _ rhs: UnsafePointer<Double>, result: UnsafeMutablePointer<Double>, count: Int) {
-        vDSP_vaddD(lhs, 1, rhs, 1, result, 1, vDSP_Length(count))
+    public static func add(
+        _ lhs: UnsafePointer<Double>,
+        _ rhs: UnsafePointer<Double>,
+        result: UnsafeMutablePointer<Double>,
+        count: Int) {
+            
+        vDSP_vaddD(
+            lhs,
+            1,
+            rhs,
+            1,
+            result,
+            1,
+            vDSP_Length(count)
+        )
+            
     }
     
-    public static func add(_ lhs: UnsafePointer<Double>, _ rhs: Double, result: UnsafeMutablePointer<Double>, count: Int) {
+    public static func add(
+        _ lhs: UnsafePointer<Double>,
+        _ rhs: Double,
+        result: UnsafeMutablePointer<Double>,
+        count: Int) {
         var scalar = rhs
-        vDSP_vsaddD(lhs, 1, &scalar, result, 1, vDSP_Length(count))
+        vDSP_vsaddD(
+            lhs,
+            1,
+            &scalar,
+            result,
+            1,
+            vDSP_Length(count)
+        )
     }
     
     public static func subtract(_ lhs: UnsafePointer<Double>, _ rhs: UnsafePointer<Double>, result: UnsafeMutablePointer<Double>, count: Int) {
@@ -45,6 +70,7 @@ extension Double: VectorArithmetic {
         vDSP_vsdivD(lhs, 1, &scalar, result, 1, vDSP_Length(count))
     }
 }
+
 extension Double: VectorHypotenuse {
     public static func hypot(
         _ lhs: UnsafePointer<Double>,

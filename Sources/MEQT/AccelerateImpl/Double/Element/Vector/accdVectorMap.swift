@@ -7,23 +7,19 @@
 
 #if canImport(Accelerate)
 import Accelerate
-//import Darwin.C.math
-import Foundation
+import Darwin.C.math
+//import Foundation
 
 extension Double: VectorMap {}
 extension Double: VectorTrigonometric {
     public static func cos(_ vector: UnsafePointer<Double>, result: UnsafeMutablePointer<Double>, count: Int) {
-        for i in 0..<count {
-            result[i] = Foundation.cos(vector[i])
-        }
+       var count = Int32(count)
+        vvcos(result, vector, &count)
     }
     
     public static func cosPi(_ vector: UnsafePointer<Double>, result: UnsafeMutablePointer<Double>, count: Int) {
-//        var count = Int32(count)
-//        vvcospi(result, vector, &count)
-        for i in 0..<count {
-            result[i] = Foundation.__cospi(vector[i])
-        }
+        var count = Int32(count)
+        vvcospi(result, vector, &count)
     }
     
     public static func sin(_ vector: UnsafePointer<Double>, result: UnsafeMutablePointer<Double>, count: Int) {
@@ -108,7 +104,11 @@ extension Double: VectorNaturalize {
         vvceil(result, vector, &count)
     }
     
-    public static func copysign(magnitudes: UnsafePointer<Double>, signs: UnsafePointer<Double>, result: UnsafeMutablePointer<Double>, count: Int) {
+    public static func copysign(
+        magnitudes: UnsafePointer<Double>,
+        signs: UnsafePointer<Double>,
+        result: UnsafeMutablePointer<Double>,
+        count: Int) {
         var count = Int32(count)
         vvcopysign(result, magnitudes, signs, &count)
     }

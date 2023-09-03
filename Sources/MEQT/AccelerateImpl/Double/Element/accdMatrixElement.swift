@@ -8,8 +8,20 @@
 import Accelerate
 
 extension Double: MatrixMovable {
-    public static func matrixMove(from sourcePointer: UnsafePointer<Double>, to destinationPoiner: UnsafeMutablePointer<Double>, subMatrixColumns: Int, subMatrixRows: Int, sourceColumns: Int, destinationColumns: Int) {
-        vDSP_mmovD(sourcePointer, destinationPoiner, vDSP_Length(subMatrixColumns), vDSP_Length(subMatrixRows), vDSP_Length(sourceColumns), vDSP_Length(destinationColumns)
+    public static func matrixMove(
+        from sourcePointer: UnsafePointer<Double>,
+        to destinationPoiner: UnsafeMutablePointer<Double>,
+        subMatrixColumns: Int,
+        subMatrixRows: Int, sourceColumns: Int,
+        destinationColumns: Int)
+    {
+        vDSP_mmovD(
+            sourcePointer,
+            destinationPoiner,
+            vDSP_Length(subMatrixColumns),
+            vDSP_Length(subMatrixRows),
+            vDSP_Length(sourceColumns),
+            vDSP_Length(destinationColumns)
         )
     }
 }
@@ -19,7 +31,8 @@ extension Double: MatrixTransposable {
         from sourcePointer: UnsafePointer<Double>,
         to destinationPointer: UnsafeMutablePointer<Double>,
         sourceColumns: Int,
-        sourceRows: Int) {
+        sourceRows: Int)
+    {
             vDSP_mtransD(
                 sourcePointer,
                 1,
@@ -28,11 +41,17 @@ extension Double: MatrixTransposable {
                 vDSP_Length(sourceColumns),
                 vDSP_Length(sourceRows)
             )
-    }
+        }
 }
 
 extension Double: MatrixMultiplicable {
-    public static func matrixMultiply(lhs: UnsafePointer<Double>, rhs: UnsafePointer<Double>, result: UnsafeMutablePointer<Double>, resultRows: Int, resultColumns: Int, leftColumnsAndrightRows: Int) {
+    public static func matrixMultiply(
+        lhs: UnsafePointer<Double>,
+        rhs: UnsafePointer<Double>,
+        result: UnsafeMutablePointer<Double>,
+        resultRows: Int,
+        resultColumns: Int,
+        leftColumnsAndrightRows: Int) {
         vDSP_mmulD(
             lhs,
             1,
